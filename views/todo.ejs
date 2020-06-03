@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <title>Todo List</title>
+    <!-- font Awesome Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"
+        integrity="sha384-REHJTs1r2ErKBuJB0fCK99gCYsVjwxHrSU0N7I1zl9vZbggVJXRMsv/sLlOAGb4M" crossorigin="anonymous">
+
+    <!-- Google-Font -->
+    <link href="https://fonts.googleapis.com/css?family=Gelasio&display=swap" rel="stylesheet">
+    <!-- Css At the End -->
+    <link rel="stylesheet" href="/assets/styles.css" type="text/css">
+</head>
+
+<body>
+    <!-- Heading -->
+    <h1> ToDo List <i class="fas fa-sticky-note"></i></h1>
+
+    <!-- Todo-div -->
+    <div id="todo-table">
+
+        <!-- Input Form -->
+        <form action="/todoList" method="POST">
+            
+          
+
+            <!--Description Div  -->
+            <div class="form-style">
+                <input type="text" name="description" placeholder="What Do You Need to Do?" required
+                    autocomplete="off" />
+            </div>
+
+            <!-- Date and category  -->
+            <div class="additional-details">
+
+                <select name="category" placeholder="Choose" required>
+                    <option value="0">Choose a Category</option>
+                    <option value="Personal">Personal</option>
+                    <option value="Home">Home</option>
+                    <option value="Coding">Coding</option>
+                    <option value="Academics">Academics</option>
+                    <option value="Project">Project</option>
+                </select>
+
+                <input type="date" name="date" placeholder="What Do You Need to Do?" required />
+
+            </div>
+
+            <!-- Add and Delete Button -->
+            <div class="form-style">
+                
+                <button type="submit"><i class="fas fa-plus"></i> Add Item</button>
+            
+                <button onclick="dele(event);"><i class="fas fa-trash-alt"href="/todolist"></i> Delete Item</button>
+            </div>
+
+        </form>
+
+
+        <ul>
+            <form name="del" action="/todoList/delete" method="post">
+
+                <!-- Looping through the list items -->
+                <% for(let i of todolist) {%>
+             
+                <li>
+                    <!-- div with List Details -->
+                    <div id="list-details" onclick="linet(this)">
+
+                        <!-- Checkbox -->
+                        <div class="check" >
+                            <input type="checkbox" class="CheckDesc" name="check"  value="<%= i.id %>">
+                        </div>
+                        <!-- Accessing the form data -->
+                        <div class="form-data" >
+                            <div class="para-form-data">
+                                <p class="description"><%= i.description %><p>
+                                        <p class="date"><i class="fas fa-calendar-alt"></i><%= i.date.toDateString() %></p>
+                            </div>
+
+                        <div class="Category"><button><%= i.category %></button></div>
+                        </div>
+
+                    </div>
+
+                </li>
+                <% } %>
+            </form>
+        </ul>
+    </div>
+</body>
+
+
+
+<script>   
+//function to invoke linethrough in the created list
+  function linet(id)
+  {
+      console.log(id);
+      id.style.textDecoration='line-through';
+      
+  }
+ 
+//function to submit checked forms via delete button
+ function dele(e){
+ 
+    e.preventDefault();
+    document.forms['del'].submit();
+ }
+
+
+
+</script>
+
+</html>
